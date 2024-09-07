@@ -1,0 +1,12 @@
+ bool dfs(int i,vector<int>adj[],bool vis[],bool path[]){
+      vis[i]=1;
+      path[i]=1;
+      for(auto u:adj[i]){
+          if(vis[u]==0){
+              if(dfs(u,adj,vis,path)==true)return true;
+          }
+          else if(path[u]==1)return true;
+      }
+      path[i]=0;
+      return false;
+  }
