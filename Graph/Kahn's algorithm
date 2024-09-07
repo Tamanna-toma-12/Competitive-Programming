@@ -1,0 +1,27 @@
+vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    // code here
+	    int indegree[V];
+	    for(int i=0;i<V;i++)indegree[i]=0;
+	    for(int i=0;i<V;i++){
+	        for(auto u:adj[i]){
+	            indegree[u]++;
+	        }
+	    }
+	    queue<int>q;
+	    vector<int>ans;
+	    for(int i=0;i<V;i++){
+	        if(indegree[i]==0)q.push(i);
+	    }
+	    while(!q.empty()){
+	        int x=q.front();
+	        q.pop();
+	        ans.push_back(x);
+	        for(auto u:adj[x]){
+	            indegree[u]--;
+	            if(indegree[u]==0)q.push(u);
+	        }
+	    }
+	    return ans;
+	   
+	}
