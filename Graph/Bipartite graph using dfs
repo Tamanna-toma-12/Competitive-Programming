@@ -1,0 +1,21 @@
+ bool dfs(int i,vector<int>adj[],int vis[],int p){
+     vis[i]=p;
+     for(auto u:adj[i]){
+         if(vis[u]==-1){
+            if( dfs(u,adj,vis,!p)==false)return false;
+         }
+         else if(vis[u]==p)return false;
+     }
+     return true;
+  }
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    int vis[V];
+	    for(int i=0;i<V;i++)vis[i]=-1;
+	    for(int i=0;i<V;i++){
+	        if(vis[i]==-1){
+	           if( dfs(i,adj,vis,0)==false)return false;
+	        }
+	    }
+	    return true;
+	}
