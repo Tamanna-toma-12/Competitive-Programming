@@ -1,0 +1,61 @@
+int parent[1200];
+int siz[1200];
+int Rank[1200];
+void make(int x){
+  parent[x]=x;
+  siz[x]=1;
+}
+int Find (int x){
+ if (parent[x]==x)return x;
+ return parent[x]=Find(parent[x]);
+}
+void UnionBySize(int a,int b){
+    a=Find(a);
+    b=Find(b);
+    if(a!=b){
+        if(siz[a]<siz[b]){
+            swap(a,b);
+        }
+        parent[b]=a;
+        siz[a]+=siz[b];
+    }
+}
+void UnionByRank(int a,int b){
+    a=Find(a);
+    b=Find(b);
+    if(a==b)return;
+    if(Rank[a]<Rank[b]){
+        parent[a]=b;
+    }
+    else if(Rank[a]>Rank[b]){
+      parent[b]=a;
+    }
+    else{
+        parent[a]=b;
+        Rank[b]++;
+    }
+}
+    int spanningTree(int V, vector<vector<int>> adj[])
+    {
+        // code here
+        for(int i=0;i<V;i++){
+           parent[i]=i;
+           Rank[i]=0;
+        }
+        vector<pair<int,pair<int,int>>>a;
+        for(int i=0;i<V;i++){
+            for(auto u:adj[i]){
+            a.push_back({u[1],{u[0],i}});
+            }
+            
+        }
+        int ans=0;
+        sort(a.begin(),a.end());
+        for(auto u:a){
+            if(Find(u.second.first)!=Find(u.second.second)){
+                ans+=u.first;
+                UnionByRank(u.second.first,u.second.second);
+            }
+        }
+        return ans;
+    }
