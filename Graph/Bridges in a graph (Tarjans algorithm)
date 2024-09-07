@@ -1,0 +1,31 @@
+ int time=1;
+    void dfs(int node,vector<int>adj[],int tin[],int low[],int parent,vector<int>&vis,vector<vector<int>>&bridge){
+      vis[node]=1;
+      tin[node]=time;
+      low[node]=time;
+      time++;
+      for(auto u:adj[node]){
+          if(u==parent)continue;
+          if(vis[u]==0){
+              dfs(u,adj,tin,low,node,vis,bridge);
+              low[node]=min(low[node],low[u]);
+              if(low[u]>tin[node]){
+               bridge.push_back({node,u});
+              }
+          }
+          else low[node]=min(low[node],low[u]);
+      }
+    }
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector<int>adj[n];
+        for(auto u:connections){
+            adj[u[0]].push_back(u[1]);
+            adj[u[1]].push_back(u[0]);
+        }
+        int tin[n];
+        int low[n];
+        vector<int>vis(n,0);
+        vector<vector<int>>bridge;
+       dfs(0,adj,tin,low,-1,vis,bridge);
+       return bridge;
+    }
