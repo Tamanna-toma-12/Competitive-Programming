@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+int n,m;
+const int mx=1e5+123;
+vector<int>adj[mx];
+bool vis[mx];
+bool dfs(int i,int p){
+   vis[i]=1;
+    for(auto u:adj[i]){
+        if(vis[u]==0){
+            if(dfs(u,i)==true)return true;
+        }
+        else {
+            if(u!=p)return true;
+        }
+    }
+    return false;
+}
+int main()
+{
+    cin>>n>>m;
+    for(int i=0;i<m;i++){
+        int x,y;
+        cin>>x>>y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    bool d=0;
+    for(int i=1;i<=n;i++)
+    {
+       if(vis[i]==0){
+        if(dfs(i,-1)==true){
+            d=1;
+            break;
+        }
+       }
+    }
+    if(d)cout<<"Detect cycle"<<endl;
+    else cout<<"No cycle"<<endl;
+    return 0;
+}
