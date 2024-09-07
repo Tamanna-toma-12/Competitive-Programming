@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  optimize()  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define  ll          long long int
+#define  ull         unsigned long long int
+#define  pb          push_back
+#define  all(v)      v.begin(),v.end()
+#define  rall(v)     v.rbegin(),v.rend()
+#define  endl        "\n"
+#define  lcm(a,b)    a/__gcd(a,b)*b
+#define  mod         (ll)1e9+7;
+#define  gcd(a,b)    __gcd(a,b)
+#define  Max(a,b,c)  max(max(a,b),c)
+#define  Min(a,b,c)  min(min(a,b),c)
+#define  pii         pair<ll,ll>
+#define  S           second
+#define  F           first
+#define  inf         1e16
+void answer();
+const ll MX=1e4+123;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+int main()
+{
+    optimize();
+     int tt=1;
+    cin>>tt;
+    ll tc=tt;
+     while(tt--){
+    cout<<"Case "<<tc-tt<<": ";
+        answer();
+     }
+     return 0;
+}
+void answer(){
+   ll n;
+   cin>>n;
+   vector<ll>f(MX,0);
+   ll mx=0;
+   for(int i=0;i<n;i++){
+     ll x;
+     cin>>x;
+     mx=max(mx,x);
+     for(int j=1;j*j<=x;j++){
+      if(x%j==0){
+         f[j]++;
+         if(j*j!=x)f[x/j]++;
+      }
+     }
+   }
+   
+   vector<ll>g(mx+1);
+   for(int i=mx;i>=1;i--){
+    if(f[i]>3){ 
+       g[i]=(f[i]*(f[i]-1)*(f[i]-2)*(f[i]-3))/24;
+     //  cout<<g[i]<<endl;
+      for(int j=i*2;j<=mx;j+=i){
+         g[i]-=g[j];
+      }
+    }
+   }
+  cout<<g[1]<<endl;
+ 
+}
