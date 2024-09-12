@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  optimize()  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define  ll          long long int
+#define  ull         unsigned long long int
+#define  pb          push_back
+#define  all(v)      v.begin(),v.end()
+#define  rall(v)     v.rbegin(),v.rend()
+#define  endl        "\n"
+#define  lcm(a,b)    a/__gcd(a,b)*b
+#define  gcd(a,b)    __gcd(a,b)
+#define  Max(a,b,c)  max(max(a,b),c)
+#define  Min(a,b,c)  min(min(a,b),c)
+#define  pii         pair<ll,ll>
+#define  S           second
+#define  F           first
+#define  inf         1e16
+const ll mod=1000000009,mod2=1000000011;
+void answer();
+const ll mx=1e6+123;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+ll base=31,base2=37;
+int main()
+{
+    optimize();
+     int tt=1;
+   // cin>>tt;
+    ll tc=tt;
+     while(tt--){
+   //cout<<"Case "<<tc-tt<<": ";
+        answer();
+     }
+     return 0;
+}
+void answer(){
+   vector<ll>pw(mx);
+   pw[0]=1;
+   
+   for(int i=1;i<mx;i++){
+      pw[i]=(pw[i-1]*base)%mod;
+   }
+
+   string s;
+   cin>>s;
+   ll n=s.size();
+   vector<ll>hash(n+1,0);
+   ll hashval=0;
+
+   for(int i=0;i<n;i++){
+       hashval=(hashval*base+((s[i]-'0')+1))%mod;
+       hash[i+1]=hashval;
+   }
+
+   for(int i=1;i<n;i++){
+      ll a,b,c,d;
+      a=hash[i];
+      c=hash[n];
+      c-=(hash[n-i]*pw[i])%mod;
+      if(c<0)c+=mod;
+      if(a==c){
+         cout<<i<<" ";
+      }
+   }
+}
