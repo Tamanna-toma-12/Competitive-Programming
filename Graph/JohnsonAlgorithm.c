@@ -55,7 +55,6 @@ void dijkstra(int graph[V][V], int dist[], int src) {
 void johnson(int graph[V][V]) {
     int h[V];
     int newGraph[V][V];
-
     for (int i = 0; i < V; i++) {
         if (!bellmanFord(graph, h, i)) {
             printf("Graph contains negative weight cycle\n");
@@ -103,11 +102,16 @@ void printSolution(int dist[][V]) {
     }
 }
 int main() {
-    int graph[V][V] = { {0, -3, INF, INF},
-                        {-1, 0, 1, INF},
-                        {INF, INF, 0, 7},
-                        {2, INF, INF, 0} };
-
+    freopen("johnsonIn.txt","r",stdin);
+    freopen("johnsonOut.txt","w",stdout);
+    int node ,edge;
+    scanf("%d %d",&node,&edge);
+    int graph[node+1][node+1];
+    for(int i=0;i<edge;i++){
+        int x,y,w;
+        scanf("%d %d %d",&x,&y,&w);
+        graph[x][y]=w;
+    }
     johnson(graph);
 
     return 0;
