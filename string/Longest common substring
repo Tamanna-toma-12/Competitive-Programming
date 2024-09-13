@@ -1,0 +1,114 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  optimize()  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define  ll          long long int
+#define  ull         unsigned long long int
+#define  pb          push_back
+#define  all(v)      v.begin(),v.end()
+#define  rall(v)     v.rbegin(),v.rend()
+#define  endl        "\n"
+#define  lcm(a,b)    a/__gcd(a,b)*b
+#define  gcd(a,b)    __gcd(a,b)
+#define  Max(a,b,c)  max(max(a,b),c)
+#define  Min(a,b,c)  min(min(a,b),c)
+#define  pii         pair<ll,ll>
+#define  S           second
+#define  F           first
+#define  inf         1e16
+const ll mod=1000000007,mod2=1000000011;
+void answer();
+const ll mx=1e5+123;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+ll base=31,base2=37;
+vector<ll>pw1(mx),pw2(mx);
+vector<ll>hash11(mx),hash12(mx),hash21(mx),hash22(mx);
+int main()
+{
+    optimize();
+     int tt=1;
+   // cin>>tt;
+    ll tc=tt;
+     while(tt--){
+   //cout<<"Case "<<tc-tt<<": ";
+        answer();
+     }
+     return 0;
+}
+void answer(){
+   pw1[0]=1;
+   pw2[0]=1;
+   for(int i=1;i<mx;i++){
+      pw1[i]=(pw1[i-1]*base)%mod;
+      pw2[i]=(pw2[i-1]*base2)%mod2;
+   }
+   ll n;
+   cin>>n;
+   string s,t;
+   cin>>s>>t;
+   //ll n=s.size();
+   ll hashval=0;
+   for(int i=0;i<n;i++){
+       hashval=(hashval*base+((s[i]-'A')+1))%mod;
+       hash11[i+1]=hashval;
+       hash12[i+1]=((hash12[i]*base2)+((s[i]-'A')+1))%mod2;
+   }
+   for(int i=0;i<n;i++){
+      hash21[i+1]=(hash21[i]*base+((t[i]-'A')+1))%mod;
+      hash22[i+1]=(hash22[i]*base2+(t[i]-'A')+1)%mod2;
+   }
+   ll l=0,h=n,ans=0,r=0;
+   while(l<=h){
+      ll mid=(l+h)>>1;
+      set<ll>s1,s2;
+      for(int i=1;i+mid<=n+1;i++){
+         ll x=i+mid-1;
+         ll h1,h2;
+         h1=hash11[x];
+         h1-=(hash11[i-1]*pw1[mid])%mod;
+        if(h1<0)h1+=mod;
+        h2=hash12[x];
+        h2-=(hash12[i-1]*pw2[mid])%mod2;
+        if(h2<0)h2+=mod2;
+        s1.insert(h1);
+        s2.insert(h2);
+         
+      }
+      bool d=0;
+      ll y=0;
+      for(int i=1;i+mid<=n+1;i++){
+         ll x=i+mid-1;
+         ll h1,h2;
+         h1=hash21[x];
+         h1-=(hash21[i-1]*pw1[mid])%mod;
+        if(h1<0)h1+=mod;
+        h2=hash22[x];
+        h2-=(hash22[i-1]*pw2[mid])%mod2;
+        if(h2<0)h2+=mod2;
+         if(s1.count(h1)>0&&s2.count(h2)>0){
+            y=i-1;
+            d=1;
+          //  cout<<x<<endl;
+            break;
+         }
+      }
+      if(d){
+       if(mid>ans){
+           ans=max(ans,mid);
+           r=y;
+         //cout<<x<<endl;
+       }
+         l=mid+1;
+      }
+      else h=mid-1;
+   }
+  // cout<<ans<<" "<<r<<endl;
+   string ss;
+   while(ans>0){
+      ss+=t[r];
+      r++;
+      ans--;
+   }
+ //  reverse(all(ss));
+   cout<<ss<<endl;
+}
