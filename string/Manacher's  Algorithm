@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  optimize()  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define  ll          long long int
+#define  ull         unsigned long long int
+#define  pb          push_back
+#define  all(v)      v.begin(),v.end()
+#define  rall(v)     v.rbegin(),v.rend()
+#define  endl        "\n"
+#define  lcm(a,b)    a/__gcd(a,b)*b
+#define  mod         (ll)1e9+7;
+#define  gcd(a,b)    __gcd(a,b)
+#define  Max(a,b,c)  max(max(a,b),c)
+#define  Min(a,b,c)  min(min(a,b),c)
+#define  pii         pair<int,int>
+#define  S           second
+#define  F           first
+#define  inf         1e16
+void answer();
+const ll mx=5e2+123;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+vector<ll>p(mx);
+int main()
+{
+    optimize();
+     int tt=1;
+  //  cin>>tt;
+    ll tc=tt;
+     while(tt--){
+   //cout<<"Case "<<tc-tt<<": ";
+        answer();
+     }
+     return 0;
+}
+void answer(){
+ ll n;
+ cin>>n;
+ string s;
+ cin>>s;
+ string ss="";
+ for(int i=0;i<n;i++){
+    ss+="#";
+    ss+=s[i];
+ }
+ ss+='#';
+// cout<<ss<<endl;
+ ll l=0,r=-1;
+ for(int i=0;i<ss.size();i++){
+      ll k;
+      if(i>r)k=0;
+      else{
+        ll j=(l+r)-i;
+        k=min(p[j],j-l);
+      }
+      while(i+k<ss.size()&&i-k>=0&&ss[i+k]==ss[i-k])k++;
+      if(i+k>ss.size()||i-k<0||ss[i+k]!=ss[i-k])k--;
+      if(i+k>r){
+        r=i+k;
+        l=max(0LL,i-k);
+      }
+      p[i]=k;
+ }
+  for(int i=0;i<ss.size();i++)cout<<p[i]<<" ";
+  cout<<endl;
+}
