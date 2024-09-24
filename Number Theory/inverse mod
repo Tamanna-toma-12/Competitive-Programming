@@ -1,4 +1,4 @@
-ll bigmod(ll b,ll p,ll mod){
+ll inverseMod(ll b,ll p,ll mod){
    long long ans=1;
     while(p>0){
         if(p%2==1){
