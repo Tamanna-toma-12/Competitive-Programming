@@ -1,0 +1,14 @@
+ll bigmod(ll b,ll p,ll mod){
+   long long ans=1;
+    while(p>0){
+        if(p%2==1){
+            ans*=b;
+            ans%=mod;
+        }
+        p/=2;
+        b*=b;
+        b%=mod;
+    }
+    return ans;
+}
+// p=power
