@@ -23,8 +23,10 @@ int main()
 {
     optimize();
      int t=1;
-    //cin>>t;
+    cin>>t;
+    int tt=t;
      while(t--){
+         cout<<"Case "<<tt-t<<": ";
         answer();
      }
      return 0;
@@ -32,12 +34,12 @@ int main()
 void answer()
 {
     string text;
-    getline(cin,text);
+    cin>>text;
     string pattern;
-    getline(cin,pattern);
+    cin>>pattern;
    // cout<<s<<endl;
-    ll n=pattern.size();
-    vector<ll>lcsp(n);
+    int n=pattern.size();
+    vector<int>lcsp(n);
     lcsp[0]=0;
     int j=0;
     for(int i=1;i<n;i++){
@@ -47,21 +49,26 @@ void answer()
         if(pattern[i]==pattern[j])j++;
         lcsp[i]=j;
     }
-  vector<ll>ans;
+  //vector<ll>ans;
   j=0;
+   int ans=0;
   for(int i=0;i<text.size();i++){
     if(text[i]==pattern[j])j++;
     else{
-      if(j>0)  j=lcsp[j-1];
+      if(j!=0) {
+          j=lcsp[j-1];
+          i--;
+      }
     }
     if(j==n){
            // cout<<i<<endl;
-        ans.pb(((i+1)-n)+1);
+        //ans.pb(((i+1)-n)+1);
+         ans++;
+       // i--;
         j=lcsp[j-1];
     }
   }
-  if(ans.empty())ans.pb(-1);
-  for(auto u:ans)cout<<u<<" ";
-  cout<<endl;
+  ///if(ans.empty())ans.pb(-1);
+  //for(auto u:ans)cout<<u<<" ";
+  cout<<ans<<endl;
 }
-
