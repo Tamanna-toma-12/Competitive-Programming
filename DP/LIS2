@@ -1,0 +1,12 @@
+int longestSubsequence(int n, int a[])
+    {
+      vector<int>ans;
+      for(int i=0;i<n;i++){
+          if(ans.empty()||ans.back()<a[i])ans.push_back(a[i]);
+          else{
+              int l=lower_bound(ans.begin(),ans.end(),a[i])-ans.begin();
+              ans[l]=a[i];
+          }
+      }
+      return ans.size();
+    }
