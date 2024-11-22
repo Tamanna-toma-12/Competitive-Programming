@@ -1,0 +1,16 @@
+ int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<int>dp(n,1);
+        for(int i=1;i<n;i++){
+            int c=0;
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i]){
+                    c=max(c,dp[j]);
+                }
+            }
+            dp[i]+=c;
+        }
+        sort(dp.rbegin(),dp.rend());
+        int ans=dp[0];
+        return ans;
+    }
