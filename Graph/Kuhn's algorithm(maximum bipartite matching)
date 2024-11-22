@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  optimize()  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define  ll          long long int
+#define  ull         unsigned long long int
+#define  pb          push_back
+#define  all(v)      v.begin(),v.end()
+#define  rall(v)     v.rbegin(),v.rend()
+#define  endl        "\n"
+#define  lcm(a,b)    a/__gcd(a,b)*b
+#define  mod         (ll)998244353
+#define  gcd(a,b)    __gcd(a,b)
+#define  Max(a,b,c)  max(max(a,b),c)
+#define  Min(a,b,c)  min(min(a,b),c)
+#define  pii         pair<ll,ll>
+#define  S           second
+#define  F           first
+void answer();
+const ll mx=1e5+123;
+const ll N=2e5+123;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+vector<vector<int>>adj(mx);
+int vis[mx];
+int ass[mx];
+bool check(int u){
+   for(auto v:adj[u]){
+       if(vis[v]==0){
+        vis[v]=1;
+        if(ass[v]==-1||check(ass[v]))
+            {
+        ass[v]=u;
+        return true;
+            }
+       }
+
+   }
+   return false;
+}
+int main()
+{
+    optimize();
+     int t=1;
+   // cin>>t;
+    int tt=t;
+     while(t--){
+        // cout<<"Case "<<tt-t<<": ";
+        answer();
+     }
+     return 0;
+}
+void answer()
+{
+ ll n;
+ cin>>n;
+ vector<ll>v(n);
+ for(int i=0;i<n;i++)cin>>v[i];
+ for(int i=0;i<n;i++){
+    ll x=v[i];
+    if(x<=n)adj[i+1].pb(x);
+    vector<ll>bin;
+    while(x>0){
+        bin.pb(x%2);
+        x/=2;
+    }
+    for(int j=0;j<bin.size();j++){
+        if(bin[j]==1){
+            ll y=v[i]-pow(2,j);
+            if(y<=n&&y>0)adj[i+1].pb(y);
+        }
+    }
+ }
+ /*for(int i=1;i<=n;i++){
+    cout<<i<<endl;
+    for(auto u:adj[i])cout<<u<<" ";
+    cout<<endl;
+ }*/
+ ll ans=0;
+ memset(ass,-1,sizeof(ass));
+ for(int i=1;i<=n;i++){
+        memset(vis,0,sizeof(vis));
+    if(check(i))ans++;
+ }
+ if(ans==n)cout<<"Yes"<<endl;
+ else cout<<"No"<<endl;
+}
