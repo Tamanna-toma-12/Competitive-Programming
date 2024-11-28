@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define  optimize()  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define  ll          long long int
+#define  ull         unsigned long long int
+#define  pb          push_back
+#define  all(v)      v.begin(),v.end()
+#define  rall(v)     v.rbegin(),v.rend()
+#define  endl        "\n"
+#define  lcm(a,b)    a/__gcd(a,b)*b
+#define  mod         (ll)998244353
+#define  gcd(a,b)    __gcd(a,b)
+#define  Max(a,b,c)  max(max(a,b),c)
+#define  Min(a,b,c)  min(min(a,b),c)
+#define  pii         pair<ll,ll>
+#define  S           second
+#define  F           first
+void answer();
+const ll mx=1e18;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+int main()
+{
+    optimize();
+     int t=1;
+    cin>>t;
+    int tt=t;
+     while(t--){
+         cout<<"Case "<<tt-t<<": ";
+        answer();
+     }
+     return 0;
+}
+void answer()
+{
+    ll n,m;
+    cin>>n>>m;
+    vector<ll>adj[n];
+    vector<pii>edge;
+    for(int i=0;i<m;i++){
+        ll x,y;
+        cin>>x>>y;
+        adj[x].pb(y);
+        adj[y].pb(x);
+        edge.pb({x,y});
+    }
+    ll ans=mx;
+    for(auto u:edge){
+        ll x=u.F;
+        ll y=u.S;
+        ll dis[n];
+        ll vis[n];
+        dis[x]=0;
+        memset(vis,0,sizeof(vis));
+        vis[x]=1;
+        queue<ll>q;
+        q.push(x);
+        while(!q.empty()){
+            ll node=q.front();
+            q.pop();
+            if(node==y)break;
+            for(auto u:adj[node]){
+                if(u==y&&node==x)continue;
+                else{
+                    if(vis[u]==0){
+                        vis[u]=1;
+                        dis[u]=dis[node]+1;
+                        q.push(u);
+                    }
+                }
+            }
+        }
+      if(vis[y]==1)  ans=min(ans,dis[y]+1);
+
+    }
+    if(ans==mx)cout<<"impossible"<<endl;
+    else cout<<ans<<endl;
+}
